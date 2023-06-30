@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+    backend:
+        build:
+            context: ./backend
+        depends_on:
+            - devDB
+        ports:
+            - 8080:80
+        volumes:
+            - './backend:/var/www/html'
+            - './backend/docker/run.sh:/run.sh'
+            - './backend/docker/000-default.conf:/etc/apache2/sites-available/000-default.conf'
+    devDB:
+        image: mariadb
+        ports:
+            - 8306:3306
+        volumes:
+        - "./db/dev:/var/lib/mysql"
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_DATABASE: codehawk

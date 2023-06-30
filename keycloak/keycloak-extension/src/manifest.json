@@ -1,0 +1,43 @@
+{
+  "name": "Chrome Extension Webpack",
+  "options_page": "options.html",
+  "background": {
+    "page": "background.html"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://keycloak.sdpmlab.org/auth/*"
+      ],
+      "js": [
+        "content.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://keycloak.sdpmlab.org/auth/*/openid-connect/auth*",
+        "https://keycloak.sdpmlab.org/auth/*/login-actions/authenticate*"
+      ],
+      "js": [
+        "contentLogin.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://keycloak.sdpmlab.org/auth/*/login-actions/registration*"
+      ],
+      "js": [
+        "contentRegister.bundle.js"
+      ]
+    }
+  ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
